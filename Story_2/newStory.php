@@ -15,23 +15,26 @@ if(isset($_POST['submit'])){
     $sql = "INSERT INTO story_title(id,title, icon) VALUES('$story_id','$story_title', '$story_icon')";
     mysqli_query($conn, $sql);
 
-    // TODO: check that file uploaded is an image
-    // TODO: story_line must be unique for that story
+    $story_line_data = array_combine($_POST['storyLine'], $_FILES['storyLineImage']['tmp_name']);
 
-
-    $story_line_data = array_merge($_POST['storyLine'], $_FILES['storyLineImage']['tmp_name']);
-    foreach($story_line_data as $paragraph=>$lineImage){
-      $info = getimagesize($lineImage);
-      if($info !== FALSE){
+    foreach ($story_line_data as $paragraph => $lineImage) {
+      if(!empty($lineImage)){
+        if(getimagesize($lineImage) !== FALSE){
+          $paragraph = mysqli_real_escape_string($conn, $paragraph);
+          $lineImage = base64_encode(file_get_contents($lineImage));
+          $insertLineSql = "INSERT INTO story_line(story_id, paragraph, images) VALUES('$story_id', '$paragraph', '$lineImage')";
+          mysqli_query($conn, $insertLineSql);
+        }else {
+          $paragraph = mysqli_real_escape_string($conn, $paragraph);
+          echo "<script>alert('The file you uploaded is not an image!')</script>";
+          $insertLineSql = "INSERT INTO story_line(story_id, paragraph, images) VALUES('$id', '$paragraph', '')";
+          mysqli_query($conn, $insertLineSql);
+        }
+      }else {
         $paragraph = mysqli_real_escape_string($conn, $paragraph);
-        $lineImage = base64_encode(file_get_contents($lineImage));
-        $storyLineSql = "INSERT INTO story_line(story_id,paragraph,images) values('$story_id', '$paragraph','$lineImage')";
-        mysqli_query($conn, $storyLineSql);
+        $insertLineSql = "INSERT INTO story_line(story_id, paragraph, images) VALUES('$story_id', '$paragraph', '')";
+        mysqli_query($conn, $insertLineSql);
       }
-      else{
-        echo "<script>alert('Line Image should be an image!');</script>";
-      }
-
     }
     echo "<script>window.location='index.php';</script>";
   }else{
@@ -74,6 +77,9 @@ if(isset($_POST['submit'])){
      </script>
    </head>
    <body style="width: 70%;">
+     <center><h3><span style="color:#009FE3;">pepper</span><span style="color:black;">Stories</span></h3>
+     <a href="index.php"><i class='fa fa-home fa-lg'></i>&nbsp;Home</a></center>
+
      <form method="post" enctype="multipart/form-data">
        <p><label>Story Title<span class="required">*</span></label><br>
          <input type="text" name="storyTitle" class="inputText" required="true"/></p>
@@ -81,7 +87,7 @@ if(isset($_POST['submit'])){
        <p><label>Story Icon<span class="required">*</span></label><br>
          <input type="file" name="storyIcon" required="true"/></p>
 
-         <div id="addLine" style="float: right; cursor:pointer;"><i class="fa fa-plus-circle fa-lg"></i>&nbsp; Add </div>
+         <div id="addLine" style="float: right; cursor:pointer;"><i class="fa fa-plus-circle fa-lg"></i>&nbsp; Add Lines</div>
 
          <div id="newStoryLine">
            <legend><label class='header' for='line'>Story Lines</label></legend>

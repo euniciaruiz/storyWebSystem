@@ -74,10 +74,10 @@ $i = 0;
 
        }else {
          echo "<div id='noLines' style='margin-bottom:30px; margin-top: 30px; color: gray;'>No lines found!</div>";
+         echo "<input type='button' onclick='index.php' value='Cancel'/>";
          echo "<div id='newLinesDiv'></div>";
          echo "<br><div style='cursor: pointer;' id='addNewStoryLine'>Add new line</div><br>";
          echo "<input type='submit' name='insertNewLines' value='Update'/>";
-         echo "<input type='button' onclick='index.php'/>";
        }
 
         ?>
