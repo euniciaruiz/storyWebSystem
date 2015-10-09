@@ -45,7 +45,9 @@ $i = 0;
      </script>
    </head>
    <body>
-     <a href='index.php'><i class='fa fa-home fa-lg'></i></a>
+     <center><h3><span style="color:#009FE3;">pepper</span><span style="color:black;">Stories</span></h3>
+     <a href="index.php"><i class='fa fa-home fa-lg'></i>&nbsp;Home</a></center>
+
      <form enctype="multipart/form-data" method="post">
 
      <center><p><label>Story Title&nbsp;</label><input name="title" type="text" style="width: 300px;"class="inputText" value="<?php echo $title['title'];?>"/></p>
@@ -96,8 +98,6 @@ $i = 0;
             this.value = default_value;
         }
     });
-
-    $("textarea").height( $("textarea")[0].scrollHeight );
   });
 
   function readURL(input) {
@@ -131,13 +131,17 @@ if(isset($_POST['submit'])){
           $pid[$j] = mysqli_real_escape_string($conn, $_POST["p_id$j"]);
           $story_line[$j] = mysqli_real_escape_string($conn, $_POST["storyLine$j"]);
           if(!empty($_FILES["image$j"]["name"])){
-            $image[$j] = $_FILES["image$j"]["tmp_name"];
-            $converted[$j] = base64_encode(file_get_contents($image[$j]));
-            $updateLine = mysqli_query($conn, "UPDATE story_line SET paragraph='$story_line[$j]',  images='$converted[$j]' WHERE p_id=$pid[$j]");
-
+              $image[$j] = $_FILES["image$j"]["tmp_name"];
+              if(getimagesize($image[$j]) !== FALSE){
+                  $converted[$j] = base64_encode(file_get_contents($image[$j]));
+                  $updateLine = mysqli_query($conn, "UPDATE story_line SET paragraph='$story_line[$j]',  images='$converted[$j]' WHERE p_id=$pid[$j]");
+              }else {
+                $sql = "UPDATE story_line SET paragraph='$story_line[$j]' WHERE p_id=$pid[$j]";
+                $updateLine = mysqli_query($conn, $sql);
+              }
           }else{
-            $sql = "UPDATE story_line SET paragraph='$story_line[$j]' WHERE p_id=$pid[$j]";
-            $updateLine = mysqli_query($conn, $sql);
+              $sql = "UPDATE story_line SET paragraph='$story_line[$j]' WHERE p_id=$pid[$j]";
+              $updateLine = mysqli_query($conn, $sql);
           }
         }
       }else{
@@ -150,28 +154,44 @@ if(isset($_POST['submit'])){
         $pid[$j] = mysqli_real_escape_string($conn, $_POST["p_id$j"]);
         $story_line[$j] = mysqli_real_escape_string($conn, $_POST["storyLine$j"]);
         if(!empty($_FILES["image$j"]["name"])){
-          echo "<script>alert('if');</script>";
           $image[$j] = $_FILES["image$j"]["tmp_name"];
-          $converted[$j] = base64_encode(file_get_contents($image[$j]));
-          $updateLine = mysqli_query($conn, "UPDATE story_line SET paragraph='$story_line[$j]',  images='$converted[$j]' WHERE p_id=$pid[$j]");
-
+          if(getimagesize($image[$j]) !== FALSE){
+            $converted[$j] = base64_encode(file_get_contents($image[$j]));
+            $updateLine = mysqli_query($conn, "UPDATE story_line SET paragraph='$story_line[$j]',  images='$converted[$j]' WHERE p_id=$pid[$j]");
+          }else {
+              echo "<script>alert('The file you uploaded is not an image!')</script>";
+          }
         }else{
           $sql = "UPDATE story_line SET paragraph='$story_line[$j]' WHERE p_id=$pid[$j]";
           echo "<script>alert('".$sql."');</script>";
           $updateLine = mysqli_query($conn, $sql);
         }
     }
+    echo "<script>window.location='index.php';</script>";
   }
+
 }
 elseif (isset($_POST['insertNewLines'])) {
   $story_line_data = array_combine($_POST['addedStoryLine'], $_FILES['addedLineImage']['tmp_name']);
 
   foreach ($story_line_data as $paragraph => $lineImage) {
-    $paragraph = mysqli_real_escape_string($conn, $paragraph);
-    $lineImage = base64_encode(file_get_contents($lineImage));
-    $insertLineSql = "INSERT INTO story_line(story_id, paragraph, images) VALUES('$id', '$paragraph', '$lineImage')";
-    mysqli_query($conn, $insertLineSql);
-
+    if(!empty($lineImage)){
+      if(getimagesize($lineImage) !== FALSE){
+        $paragraph = mysqli_real_escape_string($conn, $paragraph);
+        $lineImage = base64_encode(file_get_contents($lineImage));
+        $insertLineSql = "INSERT INTO story_line(story_id, paragraph, images) VALUES('$id', '$paragraph', '$lineImage')";
+        mysqli_query($conn, $insertLineSql);
+      }else {
+        $paragraph = mysqli_real_escape_string($conn, $paragraph);
+        echo "<script>alert('The file you uploaded is not an image!')</script>";
+        // $insertLineSql = "INSERT INTO story_line(story_id, paragraph, images) VALUES('$id', '$paragraph', '')";
+        // mysqli_query($conn, $insertLineSql);
+      }
+    }else {
+      $paragraph = mysqli_real_escape_string($conn, $paragraph);
+      $insertLineSql = "INSERT INTO story_line(story_id, paragraph, images) VALUES('$id', '$paragraph', '')";
+      mysqli_query($conn, $insertLineSql);
+    }
   }
   echo "<script>window.location='index.php';</script>";
 }

@@ -51,7 +51,7 @@ html {
   transition: width 0.2s;
 }
 .cmn-t-underline:hover {
-  color: #009FE3;
+  color: #000;
 }
 .cmn-t-underline:hover:after {
   width: 100%;

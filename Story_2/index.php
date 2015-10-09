@@ -1,6 +1,6 @@
 <?php
 include_once 'db.php';
-$sql = "SELECT * FROM story_title";
+$sql = "SELECT title, id FROM story_title";
 $query = $conn->query($sql);
  ?>
 
@@ -18,8 +18,9 @@ $query = $conn->query($sql);
    </head>
    <body><center>
      <h3><span style="color:#009FE3;">pepper</span><span style="color:black;">Stories</span></h3>
+     <a href="index.php" style="margin-bottom: 10px;">Home</a><br><br>
      <div id="createStoryBtn" style="cursor:pointer; font-family: myfont; margin-bottom:30px; font-size:32px; display: inline-block;" class="cmn-t-underline"><i class="fa fa-plus fa-lg"></i>&nbsp;Story</div>
-     <table border="0" >
+    <table border="0" >
        <tr>
          <th>Story Title</th>
        </tr>
