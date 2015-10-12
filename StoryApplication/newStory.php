@@ -59,7 +59,7 @@ if(isset($_POST['submit'])){
        var addButton = $("#addLine");
        var wrapper = $("#newStoryLine");
 
-       var fieldHTML = "<div id='addedField'><div class='removeField' style='cursor:pointer;'><i class='fa fa-times-circle fa-lg'></i></div><p><label>Story Line<br><input type='text' class='inputText' name='storyLine[]' value=''/></label></p><p><label>Line Image<br><input type='file' name='storyLineImage[]'/></label></p></div>";
+       var fieldHTML = "<div id='addedField'><hr></hr><div class='removeField' style='cursor:pointer;'><i class='fa fa-times-circle fa-lg'></i></div><p><label>Story Line<br><textarea name='storyLine[]' required='true'></textarea></label></p><p><label>Line Image<br><input type='file' name='storyLineImage[]'/></label></p></div>";
 
 
        $(addButton).click(function(){
@@ -78,22 +78,23 @@ if(isset($_POST['submit'])){
    </head>
    <body style="width: 70%;">
      <center><h3><span style="color:#009FE3;">pepper</span><span style="color:black;">Stories</span></h3>
-     <a href="index.php"><i class='fa fa-home fa-lg'></i>&nbsp;Home</a></center>
+     <a href="index.php"><i class='fa fa-home fa-lg'></i>&nbsp;Home</a> > Add Story</center>
 
-     <form method="post" enctype="multipart/form-data">
+     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" style="">
        <p><label>Story Title<span class="required">*</span></label><br>
          <input type="text" name="storyTitle" class="inputText" required="true"/></p>
 
        <p><label>Story Icon<span class="required">*</span></label><br>
          <input type="file" name="storyIcon" required="true"/></p>
 
-         <div id="addLine" style="float: right; cursor:pointer;"><i class="fa fa-plus-circle fa-lg"></i>&nbsp; Add Lines</div>
 
          <div id="newStoryLine">
            <legend><label class='header' for='line'>Story Lines</label></legend>
+           <div id="addLine" style="float: left; cursor:pointer;"><i class="fa fa-plus-circle fa-lg"></i>&nbsp; Add Lines</div>
+
            <div id="first_line">
              <p><legend>Story Line<span class="required">*</span></legend><br>
-               <input type="text" name="storyLine[]" value="" required="true"/></p>
+               <textarea name="storyLine[]" required="true"/></textarea></p>
              <p><legend>Line Image<span class="required">*</span></legend><br>
                <input type="file" name="storyLineImage[]" required="true"/></p>
            </div>

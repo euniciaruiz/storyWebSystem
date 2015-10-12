@@ -46,10 +46,10 @@ $i = 0;
    </head>
    <body>
      <center><h3><span style="color:#009FE3;">pepper</span><span style="color:black;">Stories</span></h3>
-     <a href="index.php"><i class='fa fa-home fa-lg'></i>&nbsp;Home</a></center>
+     <a href="index.php"><i class='fa fa-home fa-lg'></i>&nbsp;Home</a> > Edit Story</center>
 
      <form enctype="multipart/form-data" method="post">
-
+     <div class="form-group">
      <center><p><label>Story Title&nbsp;</label><input name="title" type="text" style="width: 300px;"class="inputText" value="<?php echo $title['title'];?>"/></p>
        <input name="icon" type="file" id="imgUpload"/>
        <img id="image" style="width:200px; height: 200px;" src="data:image/;base64,<?php echo $title['icon'];?>"/>
@@ -74,14 +74,14 @@ $i = 0;
 
        }else {
          echo "<div id='noLines' style='margin-bottom:30px; margin-top: 30px; color: gray;'>No lines found!</div>";
-         echo "<input type='button' onclick='index.php' value='Cancel'/>";
          echo "<div id='newLinesDiv'></div>";
          echo "<br><div style='cursor: pointer;' id='addNewStoryLine'>Add new line</div><br>";
+         echo "<input type='button' onclick='index.php' value='Cancel'/>";
          echo "<input type='submit' name='insertNewLines' value='Update'/>";
        }
 
         ?>
-
+      </div>
       </form>
 
    </body>
@@ -184,8 +184,8 @@ elseif (isset($_POST['insertNewLines'])) {
       }else {
         $paragraph = mysqli_real_escape_string($conn, $paragraph);
         echo "<script>alert('The file you uploaded is not an image!')</script>";
-        // $insertLineSql = "INSERT INTO story_line(story_id, paragraph, images) VALUES('$id', '$paragraph', '')";
-        // mysqli_query($conn, $insertLineSql);
+        $insertLineSql = "INSERT INTO story_line(story_id, paragraph, images) VALUES('$id', '$paragraph', '')";
+        mysqli_query($conn, $insertLineSql);
       }
     }else {
       $paragraph = mysqli_real_escape_string($conn, $paragraph);
