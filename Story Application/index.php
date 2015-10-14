@@ -1,7 +1,11 @@
 <?php
 include_once 'db.php';
-$sql = "SELECT title, id FROM story_title";
-$query = $conn->query($sql);
+
+
+$sql1 = "SELECT title, id FROM story_title ORDER BY title ASC";
+$query1 = mysqli_query($conn, $sql1);
+
+
  ?>
 
  <!DOCTYPE html>
@@ -17,26 +21,27 @@ $query = $conn->query($sql);
      <title>Story Application - Web System</title>
    </head>
    <body><center>
-     <h3><span style="color:#009FE3;">pepper</span><span style="color:black;">Stories</span></h3>
-     <a href="index.php" style="margin-bottom: 10px;">Home</a><br><br>
-     <div id="createStoryBtn" style="cursor:pointer; font-family: myfont; margin-bottom:30px; font-size:32px; display: inline-block;" class="cmn-t-underline"><i class="fa fa-plus fa-lg"></i>&nbsp;Story</div>
-    <table border="0" >
-       <tr>
-         <th>Story Title</th>
-       </tr>
-     <?php
-     if($query->num_rows > 0)
-      while($story = $query->fetch_assoc()){
-        echo "<tr>";
-        echo "<td style='padding-right: 50px;'>".$story['title']."</td>";
-        echo "<td style='padding-right: 20px;'><div class='editStory' id='editStory-".$story['id']."' style='cursor: pointer;'><i class='fa fa-pencil fa-lg'></i></div></td>";
-        echo "<td style='padding-right: 20px;'><div class='deleteStory' id='deleteStory-".$story['id']."' style='cursor: pointer;'><i class='fa fa-trash-o fa-lg'></i></div></td>";
-        echo "</tr>";
-      }
-      else {
-        echo "No stories found.";
-      }
-      ?>
-    </table></center>
+     <!-- 009FE3 -->
+     <h3><span style="color:black;">Pepper's </span><span style="color:black;">Bedtime Stories</span></h3>
+     <a href="index.php" style="margin-bottom: 10px;"><i class="fa fa-home fa-lg"></i>ホーム</a><br><br>
+     <div id="createStoryBtn" style="cursor:pointer; font-family: myfont; margin-bottom:30px; font-size:32px; display: inline-block;" class="cmn-t-underline"><i class="fa fa-plus fa-lg"></i>&nbsp;ストーリー</div>
+
+            <table>
+              <tr>
+                <th>タイトル</th>
+              </tr>
+              <?php
+                while($row = mysqli_fetch_assoc($query1)){
+               ?>
+              <tr>
+                <td><?php echo $row['title'];?></td>
+                <td><div id='editStory-<?php echo $row['id'];?>' class='editStory'><i class="fa fa-pencil"></i></div></td>
+                <td><div id='deleteStory-<?php echo $row['id'];?>' class='deleteStory'><i class="fa fa-trash-o"></i></div></td>
+              </tr>
+              <?php
+              }
+               ?>
+            </table>
+    </center>
    </body>
  </html>

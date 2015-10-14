@@ -1,4 +1,5 @@
 $(function(){
+
   $("#createStoryBtn").click(function(){
     window.location = "newStory.php";
   });

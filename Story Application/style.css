@@ -18,7 +18,7 @@ h3{
   color: #2C3974;
 }
 label{
-  color: #AA8732;
+  color: black;
   font-weight: bolder;
   font-size: 16px;
 }
@@ -27,7 +27,7 @@ table{
   font-size: 20px;
 }
 th{
-  color:#AA8732;
+  color:#FFFDFD;
   font-weight: bolder;
 }
 
@@ -35,8 +35,19 @@ hr{
   opacity: 0.5;
   width: 60%;
 }
+
+li:hover{
+  font-size: 20px;
+  cursor: pointer;
+}
 html {
   font-family: fragment;
+  background: url(Background.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
 }
 
 body{
@@ -52,65 +63,4 @@ a{
 a:hover{
   font-size: 20px;
   font-weight: bold;
-}
-.cmn-t-underline {
-  position: relative;
-  color: #000;
-}
-.cmn-t-underline:after {
-  display: block;
-  position: absolute;
-  left: 0;
-  bottom: -10px;
-  width: 0;
-  height: 10px;
-  background-color: #009FE3;
-  content: "";
-  transition: width 0.2s;
-}
-.cmn-t-underline:hover {
-  color: #000;
-}
-.cmn-t-underline:hover:after {
-  width: 100%;
-}
-
-.cmn-t-shake-deleteStory, .cmn-t-shake-editStory {
-  padding:5px 0px;
-  color: #000;
-  /* transition: transform 0.2s; */
-}
-.cmn-t-shake-deleteStory:hover, .cmn-t-shake-editStory:hover {
-  color: #000;
-  animation: shake 1s ease-in-out;
-}
-
-.inputText{
-  width: 300px;
-}
-
-@keyframes shake {
-  0% {
-    transform: translateX(0);
-  }
-
-  20% {
-    transform: translateY(-3px);
-  }
-
-  40% {
-    transform: translateY(3px);
-  }
-
-  60% {
-    transform: translateY(-3px);
-  }
-
-  80% {
-    transform: translateY(3px);
-  }
-
-  100% {
-    transform: translateX(0);
-  }
 }

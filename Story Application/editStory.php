@@ -43,7 +43,8 @@ $i = 0;
      </script>
    </head>
    <body>
-     <center><h3><span style="color:#009FE3;">pepper</span><span style="color:black;">Stories</span></h3>
+     <h3><span style="color:white;">Pepper's </span><span style="color:white;">Bedtime Stories</span></h3>
+
      <a href="index.php"><i class='fa fa-home fa-lg'></i>&nbsp;ホーム</a> > Edit ストーリー</center>
 
      <form enctype="multipart/form-data" method="post">
@@ -172,17 +173,22 @@ if(isset($_POST['submit'])){
   $story_line_data = array_combine($_POST['addedStoryLine'], $_FILES['addedLineImage']['tmp_name']);
   $count = count($story_line_data);
   if($count > 0){
-    insertNewLine($story_line_data);
+    insertNewLine($story_line_data, $conn);
   }
   else {
     echo "did not call insertnewline()";
+    echo "<script>window.location='index.php';</script>";
   }
-  echo "<script>window.location='index.php';</script>";
+
 }
 
 
-function insertNewLine($story_line_data){
-  include_once 'db.php';
+function insertNewLine($story_line_data, $conn){
+  if($conn){
+    echo "yay";
+  }else {
+    echo "nay";
+  }
   $id = $_GET['id'];
   foreach ($story_line_data as $paragraph => $lineImage) {
     if(!empty($lineImage)){
