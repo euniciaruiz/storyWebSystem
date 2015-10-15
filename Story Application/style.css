@@ -9,8 +9,10 @@
 }
 
 textarea{
-  width: 300px;
+  width: 500px;
   height: 50px;
+  font-size: 16px;
+  color: black;
 }
 h3{
   font-family: fragment;
@@ -25,11 +27,13 @@ label{
 table{
   font-family: fragment;
   font-size: 20px;
+  color: white;
 }
 th{
-  color:#FFFDFD;
+  color:#fff;
   font-weight: bolder;
 }
+
 
 hr{
   opacity: 0.5;
@@ -51,16 +55,10 @@ html {
 }
 
 body{
+  background-color: transparent;
   margin: auto;
   width: 60%;
   border: 3px;
   padding: 10px;
-}
-
-a{
-  color: black;
-}
-a:hover{
-  font-size: 20px;
-  font-weight: bold;
+  color: #000;
 }

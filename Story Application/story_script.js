@@ -1,5 +1,6 @@
 $(function(){
 
+
   $("#createStoryBtn").click(function(){
     window.location = "newStory.php";
   });
@@ -19,12 +20,11 @@ $(function(){
         data: "storyId="+id[1]+"&functionName=deleteStory",
         dataType: "json",
         success: function(data){
-          // alert("deleted question!");
-          alert(data);
           location.reload();
+          document.getElementById("successDelete").style.display = "inherit";
         },
         error: function(data){
-          alert("Oops! Something went wrong.");
+          document.getElementById("errorDelete").style.display = "inherit";
         }
       });
     }

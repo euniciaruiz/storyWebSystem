@@ -70,7 +70,7 @@ if(isset($_POST['submit'])){
        var addButton = $("#addLine");
        var wrapper = $("#newStoryLine");
 
-       var fieldHTML = "<div id='addedField'><hr></hr><div class='removeField' style='cursor:pointer;'><i class='fa fa-times-circle fa-lg'></i></div><p><label>ストーリー ライン<br><textarea name='storyLine[]' required='true'></textarea></label></p><p><label>ライン イメージ<br><input type='file' name='storyLineImage[]'/></label></p></div>";
+       var fieldHTML = "<div id='addedField'><hr></hr><div class='removeField' style='cursor:pointer;'><i class='fa fa-times-circle fa-lg'></i></div><p><label>ストーリー ライン<br>Remaining Characters: <span id='count'>100</span><br><textarea maxlength='100' name='storyLine[]' required='true' onkeyup='textCounter(this,\"count\",100);'></textarea></label></p><p><label>ライン イメージ<br><input type='file' name='storyLineImage[]'/></label></p></div>";
 
 
        $(addButton).click(function(){
@@ -90,19 +90,31 @@ if(isset($_POST['submit'])){
         //  alert(lang);
          document.getElementById("language").value = lang;
          $("#label").text(lang);
-        //  $("#setlangbtn").innerHTML = <span class="caret"></span>;
-
-
        });
-     });
+
+    });
+
+     function textCounter(field,field2,maxlimit)
+      {
+         var countfield = document.getElementById(field2);
+         if ( field.value.length > maxlimit ) {
+          field.value = field.value.substring( 0, maxlimit );
+          return false;
+         } else {
+          countfield.innerHTML = maxlimit - field.value.length;
+         }
+      }
      </script>
    </head>
-   <body style="width: 70%;">
-     <a href="index.php"><i class='fa fa-home fa-lg'></i>&nbsp;ホーム</a> > Add ストーリー</center>
+   <body style="width: 70%; margin: auto;">
+     <ol class="breadcrumb">
+       <li><a href="index.php"><i class='fa fa-home fa-lg'></i>&nbsp;ホーム</a></li>
+       <li class="active"><i class='fa fa-plus fa-lg'></i>&nbsp;ストーリー</li>
+     </ol>
 
      <br><br>
      <div class="dropdown">
-      <button title="click me to set language" class="btn btn-primary dropdown-toggle" type="button" id="setlangbtn" data-toggle="dropdown"><span id="label">Set Language</span>
+      <button title="click me to set language" class="btn btn-default dropdown-toggle" type="button" id="setlangbtn" data-toggle="dropdown"><span id="label">Set Language</span>
       <span class="caret"></span></button>
       <ul class="dropdown-menu">
         <span class="disabled dropdown-header">Language Options</span>
@@ -122,11 +134,15 @@ if(isset($_POST['submit'])){
 
 
          <div id="newStoryLine">
-           <legend><label class='header' for='line'>ストーリー ライン (Story Lines)</label></legend>
+           <center><legend><label class='header' for='line'>ストーリー ライン (Story Lines)</label></legend></center>
 
            <div id="first_line">
+
              <legend>ストーリー ライン (Story Line)<span class="required">*</span></legend><br>
-               <textarea name="storyLine[]" required="true"/></textarea>
+               Remaining Characters: <span id='counter'>100</span><br>
+               <textarea onkeyup="textCounter(this,'counter',100);"id='textinput' name="storyLine[]" required="true"/></textarea>
+               <br>
+
              <legend>ライン イメージ (Line Image)<span class="required">*</span></legend><br>
                <input type="file" name="storyLineImage[]" required="true"/>
            </div>
@@ -134,7 +150,7 @@ if(isset($_POST['submit'])){
          <div id="addLine" style="float: left; cursor:pointer;" title="Add Story Line"><i class="fa fa-plus-circle fa-lg"></i>&nbsp; ストーリー ライン</div>
          <br><br>
 
-         <input type="submit" name="submit" value="Save Story"/>
+         <input class="btn btn-default" type="submit" name="submit" value="Save Story"/>
      </form>
    </body>
  </html>
